@@ -14,3 +14,7 @@
 * failover
 	UTM VM 다운이나 Cloud C-node 다운 시에 Baremetal UTM으로 절체해주는 기능
 	원래는 Trunk port에서 UTM용 GREEN이나 ORANGE VLAN을 제거해주는 형태로 동작해야 하나, 여기에서는 스위치의 포트를 shutdown시키는 형태로만 동작
+
+<사용가이드>
+
+1. 스위치 접속 정보 설정
