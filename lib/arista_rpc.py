@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from jsonrpclib import Server, jsonrpc
+import traceback
 import ConfigParser
 import ConfigParser
 
@@ -114,7 +115,22 @@ class Vlan:
             self.name = response[0]["vlans"][self.vlan_id]["name"]
         else:
             self.name = name
+            
+    def set_ip_address(self, ip_address):
+        cmd_svi = "interface vlan%s" % self.vlan_id
+        cmd_ip = "ip addr %s" % ip_address
+        try:
+            response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_svi, cmd_ip, "end" ] )
+        except jsonrpc.ProtocolError:
+            traceback.print_exc()
 
+    def add_ip_route(self, net, gw):
+        cmd_ip_route = "ip route %s %s" % (net, gw)
+        try:
+            response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_ip_route, "end" ] )
+        except jsonrpc.ProtocolError:
+            traceback.print_exc()
+    
     def get_ports(self):
         cmd = "show vlan %s" % self.vlan_id
         response = self.proxy.runCmds( 1, [ cmd ] )
