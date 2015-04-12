@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys, ConfigParser
-path="/home/ngkim/workspace/arista_sw_mgmt/lib"
+path="/root/workspace/arista_sw_mgmt/lib"
 if path not in sys.path:
     sys.path.append(path)
     
