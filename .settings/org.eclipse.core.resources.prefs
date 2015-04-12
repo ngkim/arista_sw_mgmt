@@ -3,4 +3,4 @@ encoding//baremetal-service/config_diff.py=utf-8
 encoding//baremetal-service/failover.py=utf-8
 encoding//baremetal-service/show_config.py=utf-8
 encoding//lib/arista_rpc.py=utf-8
-encoding//vm-performance-test/01_check_L1.py=utf-8
+encoding//vm-performance-test/01_prepare_l3_switch.py=utf-8
