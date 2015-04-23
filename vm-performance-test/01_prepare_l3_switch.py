@@ -42,7 +42,7 @@ def get_red_ip(t_id):
 
 def get_red_ip_gw(t_id):
     red_ip_c=get_red_ip_c(t_id)
-    red_ip_d_gw=get_red_ip_gw(t_id)
+    red_ip_d_gw=get_red_ip_d_gw(t_id)
     
     return "211.196.%d.%d" % (red_ip_c, red_ip_d_gw)
 
