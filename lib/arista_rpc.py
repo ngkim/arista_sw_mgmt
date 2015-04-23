@@ -134,9 +134,9 @@ class Vlan:
         except jsonrpc.ProtocolError:
             traceback.print_exc()
     
-    def clear_ip_address(self, ip_address):
+    def clear_ip_address(self):
         cmd_svi = "interface vlan%s" % self.vlan_id
-        cmd_ip = "no ip address %s" % ip_address
+        cmd_ip = "no ip address"
         try:
             response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_svi, cmd_ip, "end" ] )
         except jsonrpc.ProtocolError:

@@ -81,7 +81,7 @@ def delete_vlan(cfg, t_id, uplink):
     
     vlan = Vlan(vid)
     vlan.delete_ip_route(net, gw_)
-    vlan.clear_ip_address(ip_)
+    vlan.clear_ip_address()
     vlan.delete()
     
     uplink.remove_trunk_vlan(vid)
