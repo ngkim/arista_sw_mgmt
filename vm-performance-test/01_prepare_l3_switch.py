@@ -93,7 +93,7 @@ def usage():
     sys.exit(0)
         
 def main():
-    if len(sys.argv) < 3: 
+    if len(sys.argv) < 4: 
         usage()
     
     mode=sys.argv[1]
