@@ -48,12 +48,12 @@ def main():
 
     uplink = Interface("eth35")
     
-    r_start=51
+    r_start=58
     r_end=101
     for x in range(r_start, r_end):
         add_vlan(cfg, x, uplink)
-        
-    #Console().log(" ----------------------------------------------------")
+        print " ----------------------------------------------------"
+    
     
 if __name__ == "__main__":
     main()

@@ -116,7 +116,8 @@ class Vlan:
                 except jsonrpc.ProtocolError:
                     self.create()
             
-            self.name = response[0]["vlans"][self.vlan_id]["name"]
+            if response:
+                self.name = response[0]["vlans"][self.vlan_id]["name"]
         else:
             self.name = name
             
