@@ -96,6 +96,11 @@ class Vlan:
         else:
             cmd_set_name = "name \"%s\"" % name
             response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_vlan, cmd_set_name, "end" ] )
+    
+    def delete(self):
+        cmd_vlan = "no vlan %s" % self.vlan_id
+        
+        response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_vlan, "end" ] )
         
 #config name은 항상 set name과 쌍으로 호출됨
 #name이 설정되면 이를 장치에 적용하고, 동시에 Vlan 인스턴스에도 반영함
@@ -128,6 +133,14 @@ class Vlan:
             response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_svi, cmd_ip, "end" ] )
         except jsonrpc.ProtocolError:
             traceback.print_exc()
+    
+    def clear_ip_address(self, ip_address):
+        cmd_svi = "interface vlan%s" % self.vlan_id
+        cmd_ip = "no ip address %s" % ip_address
+        try:
+            response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_svi, cmd_ip, "end" ] )
+        except jsonrpc.ProtocolError:
+            traceback.print_exc()
 
     def add_ip_route(self, net, gw):
         cmd_ip_route = "ip route %s %s" % (net, gw)
@@ -135,6 +148,13 @@ class Vlan:
             response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_ip_route, "end" ] )
         except jsonrpc.ProtocolError:
             traceback.print_exc()
+    
+    def delete_ip_route(self, net, gw):
+        cmd_ip_route = "no ip route %s %s" % (net, gw)
+        try:
+            response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_ip_route, "end" ] )
+        except jsonrpc.ProtocolError:
+            traceback.print_exc()    
     
     def get_ports(self):
         cmd = "show vlan %s" % self.vlan_id
@@ -319,6 +339,12 @@ class Interface:
         cmd_trunk_add = "switchport trunk allowed vlan add %s" % vlan_range
         
         reponse = self.proxy.runCmds( 1, [ "enable", "configure", cmd_intf, cmd_trunk_add, "end"])
+    
+    def remove_trunk_vlan(self, vlan_range):
+        cmd_intf = "interface %s" % self.interface_id
+        cmd_trunk = "switchport trunk allowed vlan remove %s" % vlan_range
+        
+        reponse = self.proxy.runCmds( 1, [ "enable", "configure", cmd_intf, cmd_trunk, "end"])    
         
     def unset_trunk(self):
         cmd_intf = "interface %s" % self.interface_id
