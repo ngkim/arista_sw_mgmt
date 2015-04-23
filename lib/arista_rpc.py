@@ -110,15 +110,19 @@ class Vlan:
             try:
                 response = self.proxy.runCmds( 1, [ cmd ] )
             except jsonrpc.ProtocolError:
-                self.create()  
-
+                self.create()
+                try:
+                    response = self.proxy.runCmds( 1, [ cmd ] )
+                except jsonrpc.ProtocolError:
+                    self.create()
+            
             self.name = response[0]["vlans"][self.vlan_id]["name"]
         else:
             self.name = name
             
     def set_ip_address(self, ip_address):
         cmd_svi = "interface vlan%s" % self.vlan_id
-        cmd_ip = "ip addr %s" % ip_address
+        cmd_ip = "ip address %s" % ip_address
         try:
             response = self.proxy.runCmds( 1, [ "enable", "configure", cmd_svi, cmd_ip, "end" ] )
         except jsonrpc.ProtocolError:

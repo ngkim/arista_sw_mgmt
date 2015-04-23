@@ -6,22 +6,18 @@ if path not in sys.path:
     
 import sys
 from utils import Console
-from arista_rpc import SwitchConfig 
+from arista_rpc import SwitchConfig, Interface, Vlan
 import utm_failover
 
 def add_vlan(cfg, t_id, uplink):
     
-    vlan_start = (t_id * 10) + 10
-    vlan_end   = (t_id * 10) + 13
-    vlan_range = "%d-%d" % (vlan_start, vlan_end)
-    
-    print "vlan_range= %s" % vlan_range
-    uplink.add_trunk_vlan(vlan_range)
-    
     vid = "%d" % (2000 + (t_id * 10) + 10 )
+
+    print "vlan_range= %s" % vid
+    uplink.add_trunk_vlan(vid)
     
     ip_ ="211.196.251.%d/30" % ((t_id * 4) + 1)
-    gw_ ="211.196.251.%d/30" % ((t_id * 4) + 2)
+    gw_ ="211.196.251.%d" % ((t_id * 4) + 2)
     net ="211.100.%d.0/24" % (t_id)
     
     print "vid= %s" % vid
@@ -30,6 +26,7 @@ def add_vlan(cfg, t_id, uplink):
     print "net= %s" % net
     
     vlan = Vlan(vid)
+    vlan.create()
     vlan.set_ip_address(ip_)
     vlan.add_ip_route(net, gw_)    
     
@@ -38,7 +35,7 @@ def main():
 
     uplink = Interface("eth35")
     
-    for x in range(100):
+    for x in range(41, 51):
         add_vlan(cfg, x, uplink)
         
     #Console().log(" ----------------------------------------------------")
